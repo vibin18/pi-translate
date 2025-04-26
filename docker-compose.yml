@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  translator-api:
+    build: .
+    container_name: translator-service
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    volumes:
+      - ./:/app
+    environment:
+      - TZ=UTC
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
